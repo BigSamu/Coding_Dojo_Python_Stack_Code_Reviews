@@ -1,4 +1,6 @@
 
+import copy
+
 class User:
     def __init__(self,name,email):
         self.name = name
@@ -19,6 +21,7 @@ b_copy = b
 c_copy = c
 d_copy = d
 e_copy = e
+e_deep_copy = copy.deepcopy(e)
 
 
 print("\n"+"*"*150)
@@ -78,8 +81,9 @@ print("*"*150)
 # Case 4 - class type
 e_copy.name = "John Phillips"
 e_copy.email = "johnphillips@gmail.com"
+e_deep_copy.email = "peter_phillips@gmail.com"
 print("Case 5 - class type")
-print(f"value of 'e'     : {e.name} - {e.email} - address in memory of 'e':      {hex(id(e))}")
-print(f"value of 'e_copy': {e_copy.name} - {e_copy.email} - address in memory of 'e_copy': {hex(id(e_copy))}")
-
+print(f"value of 'e'          : {e.name} - {e.email} - address in memory of 'e':      {hex(id(e))}")
+print(f"value of 'e_copy'     : {e_copy.name} - {e_copy.email} - address in memory of 'e_copy': {hex(id(e_copy))}")
+print(f"value of 'e_deep_copy': {e_deep_copy.name} - {e_deep_copy.email} - address in memory of 'e_deep_copy': {hex(id(e_deep_copy))}")
 print("*"*150)
