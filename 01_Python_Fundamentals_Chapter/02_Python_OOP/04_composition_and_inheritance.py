@@ -1,123 +1,84 @@
-# Class Definition
-class User:
 
+
+# <User>
+#   - name
+#   - email
+#   - number_of_accounts (2 accounts -> savings, chekcing)
+#   - accounts[] -> [<savings>, <chekcing>]
+
+# <Bank Account> 
+#   - init_rate
+#   - balance
+#   - account_number
+
+
+# guido.accounts[0].deposit(100)
+# guido.accounts[1].deposit(50)
+
+# -----------------------
+# Bank Account Class
+# -----------------------
+
+class BankAccount:
+    
     # I.1) Class Attributes
-    bank_name = "First National Dojo"
-    all_users = []
-
+    accounts = []
     # II) Class Constructor
-    def __init__(self, name, email_address="no_email_given"):
+    def __init__(self,int_rate,balance):
         # I.2) Instance Attributes
-        self.name = name
-        self.email = email_address
-        self.account_balance = 0
-        User.all_users.append(self)
+        self.int_rate = int_rate
+        self.balance = balance
+        # I.3) Others 
+        BankAccount.accounts.append(self) 
 
     # III) Methods
     # III.1) Instance Methods
-    def make_deposit(self, amount):
-        self.account_balance += amount
+    def deposit(self, amount):
+        self.balance = self.balance + amount
         return self
 
-    def make_withdraw(self, amount):
-        if User.can_withdraw(self.account_balance, amount):
-            self.account_balance -= amount 
-        return self
-    
-    def transfer_money(self, amount, user):
-        if User.can_withdraw(self.account_balance, amount):
-            self.account_balance -= amount
-            user.account_balance += amount
-        return self
-    
-
-    # III.2) Class Method
-    @classmethod
-    def change_bank_name(cls, name):
-        cls.bank_name = name
-        return cls
-
-    @classmethod
-    def list_users(cls):
-        out = ""
-        for each in cls.all_users:
-            out = out + each.name + " - "
-        return out[0 : len(out) - 3]
-
-    # III.3) Static Method
-    @staticmethod
-    def can_withdraw(balance,amount):
-        if(balance-amount)<0:
-            print("Insufficient Funds!!!")
-            return False
+    def withdraw(self,amount):
+        if(self.balance - amount) >= 0:
+            self.balance -= amount
         else:
-            return True
+            print("Insufficient Funds: Charging a $5 fee")
+            self.balance -= 5
+        return self
+    
+    def display_account_info(self):
+        print(f"Balance: {self.balance}")
+        return self
 
-print("*" * 50)
+    def yeild_interest(self): 
+        if self.balance > 0:
+            self.balance += (self.balance * self.int_rate)
+        return self
 
-guido = User("Guido van Rossum", "guido@python.com")
-monty = User("Monty Python")
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{monty.name} - {monty.email} - ${monty.account_balance} - {monty.bank_name}")
+    # III.2) Class Methods
+    @classmethod
+    def print_all_accounts(cls):
+        for account in cls.accounts:
+            account.display_account_info()
 
-print("*" * 50)
 
-print(guido.make_deposit(200))
-monty.make_deposit(200).make_deposit(50)
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{monty.name} - {monty.email} - ${monty.account_balance} - {monty.bank_name}")
 
-print("*" * 50)
 
-guido.bank_name = "ABC"
-User.change_bank_name("XYZ")
-peter = User("Peter Phillips", "peter@python.com")
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{monty.name} - {monty.email} - ${monty.account_balance} - {monty.bank_name}")
-print(f"{peter.name} - {peter.email} - ${peter.account_balance} - {peter.bank_name}")
 
-print("*" * 50)
 
-print("Listing Users:")
-print(User.list_users())
+# ***************
+# Driver Code
+# ***************
 
-print("*" * 50)
+savings = BankAccount(.05,1000)
+checking = BankAccount(.02,5000)
 
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print("Guido withdrawing 100 from its account")
-guido.make_withdraw(100)
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
+BankAccount.print_all_accounts()
 
-print("*" * 50)
+print("*"*50)
 
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print("Guido withdrawing 150 from its account")
-guido.make_withdraw(150)
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
+savings.deposit(10).deposit(20).deposit(40).withdraw(600).yeild_interest().display_account_info()
+checking.deposit(100).deposit(200).deposit(400).withdraw(60).yeild_interest().display_account_info()
 
-print("*" * 50)
+print("*"*50)
 
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print("Guido withdrawing 25 twice from its account")
-guido.make_withdraw(25).make_withdraw(25)
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-
-print("*" * 50)
-
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{monty.name} - {monty.email} - ${monty.account_balance} - {monty.bank_name}")
-guido.transfer_money(5, monty)
-print("Guido transfering 5 to Monty")
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{monty.name} - {monty.email} - ${monty.account_balance} - {monty.bank_name}")
-
-print("*" * 50)
-
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{peter.name} - {peter.email} - ${peter.account_balance} - {peter.bank_name}")
-print(f"Guido transfering 50 to Peter")
-guido.transfer_money(50, peter)
-print(f"{guido.name} - {guido.email} - ${guido.account_balance} - {guido.bank_name}")
-print(f"{peter.name} - {peter.email} - ${peter.account_balance} - {peter.bank_name}")
-
-print("*" * 50)
+BankAccount.print_all_accounts().print_all_accounts()
