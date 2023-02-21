@@ -1,8 +1,9 @@
 * {
     margin: 0;
     padding: 0;
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
 }
+
 .wrapper {
   padding: 25px;
   background-color: lightgrey;
@@ -18,19 +19,19 @@ h1 {
 }
 
 .boxContainer{
-  margin: 0 auto 30px;
+  margin: 0px auto;
 }
 
 .boxOne {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-  background-color: black;
-}
-
-.boxTwo {
-  display: inline-block;
+  
   width: 80px;
   height: 80px;
   background-color: white;
+}
+
+.boxTwo {
+  
+  width: 80px;
+  height: 80px;
+  background-color: black;
 }
