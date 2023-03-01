@@ -30,11 +30,8 @@
             <strong>My Burgers Website</strong>
           </a>
           <div>
-            <a href="/burgers" class="btn btn-link"
-              ><u class="text-white font-weight-bold">Burgers List</u></a
-            >
-            <a href="/" class="btn btn-link"
-              ><u class="text-white font-weight-bold">Home</u></a
+            <a href="/burgers/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Burger</u></a
             >
           </div>
         </div>
@@ -43,40 +40,37 @@
 
     <!-- II) MAIN SECTION -->
     <main>
-      <form
-        action="/create"
-        method="post"
-        class="p-4 w-25 mx-auto my-5 bg-dark text-light"
-      >
-        <h2 class="text-center">Create Burger:</h2>
-        <div class="form-group">
-          <label for="name">Burger Name:</label>
-          <input type="text" name="name" id="name" class="form-control" />
+        <div class="container d-flex justify-content-around flex-wrap">
+            
+            {% for burger in burgers %}
+                <div class="card col-3 bg-light mx-2 mt-4">
+                    <!-- Card Body -->
+                    <div class="card-body d-flex flex-column">
+                        <!-- Card Body - Part 1 -->
+                        <div class="flex-grow-1">
+                            <h2 class="card-title">
+                                <a href="/details/{{burger.id}}">{{ burger.name }}</a>
+                            </h2>
+                            <ul class="card-text list-unstyled">
+                                <li>Bun: {{burger.bun}}</li>
+                                <li>Meat: {{burger.meat}}</li>
+                                <li>Calories: {{burger.calories}}</li>
+                            </ul>
+                        </div>
+                        <!-- Card Body - Part 2 -->
+                        <div class="mt-4 align-self-end">
+                            <a href="/burgers/{{burger.id}}/edit" class="btn btn-outline-success btn-sm">Edit</a>
+                            <a href="/burgers/{{burger.id}}/delete" class="btn btn-outline-danger btn-sm" >Delete</a>
+                        </div>
+                    </div>
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-light mb-3">
+                        <p class="card-subtitle small">Created on: {{ burger.created_at.strftime("%B %d, %Y  at %H:%M:%S") }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            
         </div>
-        <div class="form-group">
-          <label for="bun">Bun:</label>
-          <input type="text" name="bun" id="bun" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="meat">Meat:</label>
-          <input type="text" name="meat" id="meat" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="calories">Calories:</label>
-          <input
-            type="number"
-            min="0"
-            name="calories"
-            id="calories"
-            class="form-control"
-          />
-        </div>
-        <input
-          type="submit"
-          value="Create Burger"
-          class="btn btn-success"
-        />
-      </form>
     </main>
   </body>
 </html>
