@@ -30,8 +30,8 @@
             <strong>My Burgers Website</strong>
           </a>
           <div>
-            <a href="/restaurants/new" class="btn btn-link"
-              ><u class="text-white font-weight-bold">New Restaurant</u></a
+            <a href="/burgers/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Burger</u></a
             >
           </div>
           <div>
@@ -51,12 +51,12 @@
     <!-- II) MAIN SECTION -->
     <main>
       <form
-        action="/burgers/new"
+        action="/restaurants/new"
         method="post"
-        class="p-4 w-25 mx-auto my-5 bg-dark text-light"
+        class="p-4 w-25 mx-auto mt-5 mb-4 bg-dark text-light"
       >
-        <h2 class="text-center">Create Burger:</h2>
-
+        <h2 class="text-center">Create Restaurant:</h2>
+        
         {% with messages = get_flashed_messages() %} 
           {% if messages %}
             <ul class="alert alert-danger list-unstyled">
@@ -68,39 +68,29 @@
         {% endwith %}
 
         <div class="form-group">
-          <label for="name">Burger Name:</label>
+          <label for="name">Restaurant Name:</label>
           <input type="text" name="name" id="name" class="form-control" />
         </div>
-        <div class="form-group">
-          <label for="bun">Bun:</label>
-          <input type="text" name="bun" id="bun" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="meat">Meat:</label>
-          <input type="text" name="meat" id="meat" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label for="calories">Calories:</label>
-          <input
-            type="number"
-            min="0"
-            value="0"
-            name="calories"
-            id="calories"
-            class="form-control"
-          />
-        </div>
-        <div class="form-group">
-          <label for="restaurant">Restaurant:</label>
-          <select id="restaurant" name="restaurant_id" class="form-control">
-            <option selected value="">Choose...</option>
-            {% for restaurant in restaurants %}
-            <option value="{{restaurant.id}}">{{restaurant.name}}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <input type="submit" value="Create Burger" class="btn btn-success" />
+
+        <input type="submit" value="Create Restaurant" class="btn btn-success" />
       </form>
+
+      <div class="w-25 mx-auto">
+        <hr />
+        <h3>Restaurants Added:</h3>
+        <ul>
+          {% for restaurant in restaurants %}
+          <li>
+            {{restaurant.name}}
+            <a
+              href="/restaurants/{{restaurant.id}}/delete"
+              class="btn btn-outline-danger btn-sm py-0 align-top"
+              >Delete</a
+            >
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
     </main>
   </body>
 </html>

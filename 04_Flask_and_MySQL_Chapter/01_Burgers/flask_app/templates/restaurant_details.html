@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CDN CSS (remote) -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS (local) -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/style.css') }}"
+    />
+
+    <title>My Burgers Website</title>
+  </head>
+  <body>
+    <!-- I) HEADER SECTION-->
+    <header>
+      <div class="navbar navbar-dark bg-dark">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand flex-grow-1">
+            <strong>My Burgers Website</strong>
+          </a>
+          <div>
+            <a href="/burgers" class="btn btn-link"
+              ><u class="text-white font-weight-bold">Home</u></a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- II) MAIN SECTION -->
+
+    <!-- II) MAIN SECTION -->
+    <main>
+      <div class="container mt-3">
+        <h3>{{restaurant.name}}</h3>
+        <p>These are the burgers available in this place:</p>
+        <ul class="list-group mb-3 w-50">
+            {% for burger in restaurant.burgers %}
+                <li class="list-group-item">
+                  <h4><a href="/burgers/{{burger.id}}"><u>{{burger.name}}</u></a></h4>
+                  <ul>
+                    <li>Bun: {{burger.bun}}</li>
+                    <li>Meat: {{burger.meat}}</li>
+                    <li>Calories: {{burger.calories}}</li>
+                  </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <a href="/burgers"> <u>Go to Home!</u></a>
+      </div>
+    </main>
+  </body>
+</html>

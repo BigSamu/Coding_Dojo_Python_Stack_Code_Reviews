@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CDN CSS (remote) -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS (local) -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/style.css') }}"
+    />
+
+    <title>My Burgers Website</title>
+  </head>
+  <body>
+    <!-- I) HEADER SECTION-->
+    <header>
+      <div class="navbar navbar-dark bg-dark">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand flex-grow-1">
+            <strong>My Burgers Website</strong>
+          </a>
+          <div>
+            <a href="/restaurants/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Restaurant</u></a
+            >
+          </div>
+          <div>
+            <a href="/burgers/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Burger</u></a
+            >
+          </div>
+          <div>
+            <a href="/toppings/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Toping</u></a
+            >
+          </div>
+          <div>
+            <a href="/burgers" class="btn btn-link"
+              ><u class="text-white font-weight-bold">Home</u></a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- II) MAIN SECTION -->
+    <main>
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col">
+            <h3>{{burger.name}}</h3>
+            <p>These are the details of your burger:</p>
+            <ul class="list-group mb-3 w-75">
+              <li class="list-group-item">Bun: {{burger.bun}}</li>
+              <li class="list-group-item">Meat: {{burger.meat}}</li>
+              <li class="list-group-item">Calories: {{burger.calories}}</li>
+              <li class="list-group-item">
+                Toppings:
+                <ul>
+                    {% if burger.toppings %}
+                        {% for topping in burger.toppings %}
+                        <li>
+                            <a href="/toppings/{{topping.id}}">
+                                <u>{{topping.name}}</u>
+                            </a>
+                            <a
+                            href="/burgers/{{burger.id}}/remove/toppings/{{topping.id}}"
+                            class="btn btn-outline-danger btn-sm py-0 align-top">
+                                Remove
+                            </a>
+                        </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No topings added!</li>
+                    {% endif %}
+                </ul>
+              </li>
+              <li class="list-group-item">
+                Restaurant: <a href="/restaurants/{{burger.restaurant_id}}"><u>{{restaurant.name}}</u></a>
+              </li>
+            </ul>
+
+            <div class="my-4 d-flex w-50">
+              <a
+                href="/burgers/{{burger.id}}/edit"
+                class="btn btn-success btn-sm ml-1"
+                >Edit</a
+              >
+              <a
+                href="/burgers/{{burger.id}}/delete"
+                class="btn btn-danger btn-sm ml-1"
+                >Delete</a
+              >
+            </div>
+          </div>
+          <div class="col">
+            <h3>Toppings</h3>
+            <p>Include Toppings in Burger:</p>
+            {% if unselected_toppings %}
+              <form action="/burgers/add/toppings" method="post">
+                <input type="hidden" name="burger_id" value="{{burger.id}}" />
+                <div class="form-group">
+                  <label for="topping_id">Unselected Toppings:</label>
+                  <select name="topping_id" class="form-control">
+                    {% for topping in unselected_toppings %}
+                        <option value="{{topping.id}}">{{topping.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <input
+                  type="submit"
+                  value="Add Topping"
+                  class="btn btn-primary btn-sm"
+                />
+              </form>
+            {% else %}
+              <p class="alert alert-danger">No more toppings available!</p>  
+            {% endif %}
+          </div>
+        </div>
+        <hr />
+        <a href="/burgers"> <u>Go to Home!</u></a>
+      </div>
+    </main>
+  </body>
+</html>

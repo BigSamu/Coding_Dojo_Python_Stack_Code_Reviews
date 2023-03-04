@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Bootstrap CDN CSS (remote) -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS (local) -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/style.css') }}"
+    />
+
+    <title>My Burgers Website</title>
+  </head>
+  <body>
+    <!-- I) HEADER SECTION-->
+    <header>
+      <div class="navbar navbar-dark bg-dark">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand flex-grow-1">
+            <strong>My Burgers Website</strong>
+          </a>
+          <div>
+            <a href="/restaurants/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Restaurant</u></a
+            >
+          </div>
+          <div>
+            <a href="/burgers/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Burger</u></a
+            >
+          </div>
+          <div>
+            <a href="/toppings/new" class="btn btn-link"
+              ><u class="text-white font-weight-bold">New Toping</u></a
+            >
+          </div>
+          <div>
+            <a href="/burgers" class="btn btn-link"
+              ><u class="text-white font-weight-bold">Home</u></a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- II) MAIN SECTION -->
+    <main>
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col">
+            <h3>{{topping.name}}</h3>
+            <p>These are the burgers with this toppin:</p>
+            <ul class="list-group mb-3 w-75">
+              {% if topping.on_burgers %} 
+                {% for burger in topping.on_burgers %}
+                  <li class="list-group-item">
+                    {{burger.name}}
+                    <a
+                      href="/toppings/{{topping.id}}/remove/burgers/{{burger.id}}"
+                      class="btn btn-outline-danger btn-sm py-0 align-top"
+                      >Remove</a
+                    >
+                  </li>
+                {% endfor %} 
+              {% else %}
+                <li class="list-group-item">No burgers with this topping!</li>
+              {% endif %}
+            </ul>
+          
+            <div class="my-4 d-flex w-50">
+              <a
+                href="/toppings/{{topping.id}}/delete"
+                class="btn btn-danger btn-sm ml-1"
+                >Delete</a
+              >
+            </div>
+          </div>
+          <div class="col">
+            <h3>Burgers</h3>
+            <p>Include Burgers to Topping:</p>
+            {% if unselected_burgers %}
+              <form action="/toppings/add/burgers" method="post">
+                <input type="hidden" name="topping_id" value="{{topping.id}}" />
+                <div class="form-group">
+                  <label for="burger_id">Unselected Burgers:</label>
+                  <select name="burger_id" class="form-control">
+                    {% for burger in unselected_burgers %}
+                      <option value="{{burger.id}}">{{burger.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <input
+                  type="submit"
+                  value="Add Burger"
+                  class="btn btn-primary btn-sm"
+                />
+              </form>
+            {% else %}
+              <p class="alert alert-danger">No more burgers available!</p>  
+            {% endif %}
+          </div>
+        </div>
+        <hr />
+        <a href="/burgers"> <u>Go to Home!</u></a>
+      </div>
+    </main>
+  </body>
+</html>
