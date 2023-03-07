@@ -25,6 +25,7 @@ class Message:
         messages = []
         for message in results:
             messages.append( cls(message) )
+        print(message)
         return messages
     
     # 2) CREATE OPERATIONS
