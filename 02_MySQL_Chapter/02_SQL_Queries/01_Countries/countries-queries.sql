@@ -19,7 +19,7 @@ JOIN cities ON countries.id = cities.country_id
 GROUP BY countries.id
 ORDER BY Number_of_Cities DESC;
 
--- SOLUTION 1 (With languages)
+-- SOLUTION 2 (With languages)
 SELECT countries.name AS Country, COUNT(cities.country_id) AS Number_of_Cities, countries_and_languages.languages AS Languages
 FROM countries
 JOIN cities ON countries.id = cities.country_id
@@ -29,6 +29,14 @@ JOIN (
 		GROUP BY languages.country_id
     ) AS countries_and_languages
 ON countries_and_languages.country_id = countries.id
+GROUP BY countries.id
+ORDER BY Number_of_Cities DESC;
+
+-- SOLUTION 2 (WRONG)
+SELECT countries.name AS Country, COUNT(cities.country_id) AS Number_of_Cities
+FROM countries
+JOIN cities ON countries.id = cities.country_id
+JOIN languages ON countries.id = languages.country_id
 GROUP BY countries.id
 ORDER BY Number_of_Cities DESC;
 
