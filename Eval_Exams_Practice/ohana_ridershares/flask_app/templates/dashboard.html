@@ -1,0 +1,26 @@
+{% extends "base.html" %} 
+
+{% block title %} Dashboard {% endblock%}
+
+{% block content %}
+<h3 class="font-weight-bold">Welcome {{rider.first_name}} {{rider.last_name}}!!!</h3>
+
+<hr class="border border-black border-4" />
+
+<div class="row justify-content-around">
+  <!-- 2.1) Rideshare Requests -->
+  <div class="col-5 bg-dark text-light p-3">
+    <h3 class="text-center">Rideshare Requests</h3>
+    <hr class="bg-warning" />
+
+    
+  </div>
+
+  <!-- 2.2) Booked Rideshares -->
+  <div class="col-5 bg-dark text-light p-3">
+    <h3 class="text-center">Booked Rideshares</h3>
+    <hr class="bg-warning" />
+   
+  </div>
+</div>
+{% endblock %}
