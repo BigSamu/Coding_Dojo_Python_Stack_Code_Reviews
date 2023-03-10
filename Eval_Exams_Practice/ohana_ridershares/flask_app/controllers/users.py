@@ -48,15 +48,8 @@ def login():
     session['user_id'] = user.id
     return redirect('/rides/dashboard')
 
-@app.route("/rides/dashboard")
-def rides_dashboard():
-    print(session)
-    if 'user_id' not in session:
-        return redirect('/')
-    data = {
-        "id": session['user_id']
-    }
-    rider = User.get_one(data)
-    # rides = Ride.get_all()
-    # users = User.get_all()
-    return render_template("dashboard.html",rider=rider)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')

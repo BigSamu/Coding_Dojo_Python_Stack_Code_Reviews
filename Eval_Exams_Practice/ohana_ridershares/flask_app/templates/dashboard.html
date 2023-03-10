@@ -13,14 +13,46 @@
     <h3 class="text-center">Rideshare Requests</h3>
     <hr class="bg-warning" />
 
-    
+    {% for ride in rides_without_driver %}
+      <div class="p-2 border border-round border-light mb-4">
+        <table class="table table-borderless table-dark mb-0">
+          <tbody>
+            <tr>
+              <td class="p-0">Rider:</td>
+              <td class="p-0">{{ride.rider}}</td>
+            </tr>
+            <tr>
+              <td class="p-0">Destination:</td>
+              <td class="p-0">{{ride.destination}}</td>
+            </tr>
+            <tr>
+              <td class="p-0">When:</td>
+              <td class="p-0">{{ride.rideshare_date}}</td>
+            </tr>
+          </tbody>
+        </table>
+        {% if session.user_id == ride.rider_id %}
+          <div class="d-flex justify-content-end">
+            <a href="/rides/{{ride.id}}/delete" class="btn btn-link p-0"><u>Delete</u></a>
+          </div>
+        {% else %}
+          <div class="d-flex justify-content-end">
+            <a href="/rides/{{ride.id}}/add_driver/{{session.user_id}}" class="btn btn-link p-0"><u>I can drive!</u></a>
+          </div>
+        {% endif %}
+    </div>
+    {% endfor %}
   </div>
 
   <!-- 2.2) Booked Rideshares -->
   <div class="col-5 bg-dark text-light p-3">
     <h3 class="text-center">Booked Rideshares</h3>
     <hr class="bg-warning" />
-   
+    {% for ride in rides_with_driver %} 
+    
+    
+    {% endfor %}
+      
   </div>
 </div>
 {% endblock %}

@@ -26,6 +26,15 @@
         {% endif %} 
       {% endwith %}
 
+      <!-- Rider (Hidden) -->
+      <input
+        hidden
+        type="text"
+        name="rider_id"
+        id="rider_id"
+        value={{session.user_id}}
+      />
+      
       <!-- Destination -->
       <div class="form-group row">
         <label for="destination" class="col-sm-4 col-form-label"  
@@ -43,14 +52,14 @@
     
       <!-- Pick Up Location -->
       <div class="form-group row">
-        <label for="pick-up-location" class="col-sm-4 col-form-label"
+        <label for="pick_up_location" class="col-sm-4 col-form-label"
           >Pick-up Location:</label
         >
         <div class="col-sm-8">
           <input
             type="text"
-            name="pick-up-location"
-            id="pick-up-location"
+            name="pick_up_location"
+            id="pick_up_location"
             class="form-control"
           />
         </div>
@@ -58,14 +67,14 @@
     
       <!-- Rideshare Date -->
       <div class="form-group row">
-        <label for="rideshare-date" class="col-sm-4 col-form-label"
+        <label for="rideshare_date" class="col-sm-4 col-form-label"
           >RideShare Date:</label
         >
         <div class="col-sm-8">
           <input
             type="date"
-            name="rideshare-date"
-            id="rideshare-date"
+            name="rideshare_date"
+            id="rideshare_date"
             class="form-control"
           />
         </div>
