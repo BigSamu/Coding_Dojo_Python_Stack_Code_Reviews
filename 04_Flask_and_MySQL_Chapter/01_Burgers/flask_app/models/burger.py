@@ -90,8 +90,8 @@ class Burger:
         query = "DELETE FROM burgers WHERE id = %(id)s;"
         return connectToMySQL("burgers_db").query_db(query, data)
     
-    @classmethod
     # 4.2) Remove Topping from Burger
+    @classmethod
     def remove_topping(cls,data): # remove relationship in burgers_toppings table
         query = "DELETE FROM burgers_toppings WHERE burgers_toppings.burger_id = %(burger_id)s AND burgers_toppings.topping_id=%(topping_id)s;"
         return connectToMySQL('burgers_db').query_db(query,data);
