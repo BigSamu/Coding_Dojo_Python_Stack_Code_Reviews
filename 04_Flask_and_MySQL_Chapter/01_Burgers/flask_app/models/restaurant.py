@@ -8,6 +8,7 @@ class Restaurant:
         self.name = db_data["name"]
         self.created_at = db_data["created_at"]
         self.updated_at = db_data["updated_at"]
+        
         self.burgers = []
 
     # 1) READ OPERATIONS

@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import topping
+from flask_app.models import topping, restaurant
 from flask import flash
 
 class Burger:
@@ -12,17 +12,31 @@ class Burger:
         self.restaurant_id = data["restaurant_id"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
+
+        self.restaurant = None
         self.toppings = []
+        
        
     # 1) READ OPERATIONS
-    # 1.1) Get All Burgers without Topings
+    # 1.1) Get All Burgers without Topings but with restaurants
     @classmethod
     def get_all(cls):
-        query =  "SELECT * FROM burgers;"
+        query =  "SELECT * FROM burgers LEFT JOIN restaurants ON burgers.restaurant_id = restaurants.id;"
         results = connectToMySQL("burgers_db").query_db(query)
+   
         burgers = []
-        for burger in results:
-            burgers.append(cls(burger))
+        for row in results:
+            restaurant_data = {
+                "id" : row["restaurants.id"],
+                "name" : row["restaurants.name"],
+                "created_at" : row["restaurants.created_at"],
+                "updated_at" : row["restaurants.updated_at"]
+            }
+        
+            selected_restaurant = restaurant.Restaurant(restaurant_data)
+            selected_burger = cls(row)
+            selected_burger.restaurant = selected_restaurant
+            burgers.append(selected_burger)
         return burgers
  
     # 1.2) Get One Burger without Topings
@@ -47,7 +61,9 @@ class Burger:
                 "created_at" : row["toppings.created_at"],
                 "updated_at" : row["toppings.updated_at"]
             }
+      
             burger.toppings.append( topping.Topping( topping_data ) )
+        
         return burger
     
     # 1.4) Get unselected Burgers from Topping

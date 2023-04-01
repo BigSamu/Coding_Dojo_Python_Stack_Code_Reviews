@@ -52,8 +52,11 @@
     <main>
       {% if not burgers %}
       <div class="container text-center">
-        <h1 class="my-4"> No burgers added yet!</h1>
-        <img class="img-thumbnail" src="{{ url_for('static',filename='img/hamburger-crying.png') }}">
+        <h1 class="my-4">No burgers added yet!</h1>
+        <img
+          class="img-thumbnail"
+          src="{{ url_for('static',filename='img/hamburger-crying.png') }}"
+        />
       </div>
       {% endif %}
       <div class="container d-flex justify-content-around flex-wrap">
@@ -70,13 +73,13 @@
                 <li>Bun: {{burger.bun}}</li>
                 <li>Meat: {{burger.meat}}</li>
                 <li>Calories: {{burger.calories}}</li>
-                <li>Restaurant ID: {{burger.restaurant_id}}</li>
+                <li>
+                  Restaurant:
+                  <a href="/restaurants/{{burger.restaurant_id}}">
+                    <u> {{burger.restaurant.name}}</u>
+                  </a>
+                </li>
               </ul>
-              <p className="mt-2">
-                <a  href="/restaurants/{{burger.restaurant_id}}">
-                  <u>Check Restaurant!</u>
-                </a>
-              </p>
             </div>
             <!-- Card Body - Part 2 -->
             <div class="mt-4 align-self-end">
